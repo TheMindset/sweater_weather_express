@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": "TheMindset",
+    "password": null,
+    "database": "weather_sweater_development",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "operatorsAliases": false
+  },
+  "test": {
+    "username": "TheMindset",
+    "password": null,
+    "database": "weather_sweater_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "operatorsAliases": false
+  },
+  "production": {
+    "username": "TheMindset",
+    "password": null,
+    "database": "weather_sweater_production",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "operatorsAliases": false
+  }
+}
