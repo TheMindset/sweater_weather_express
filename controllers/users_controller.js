@@ -1,5 +1,6 @@
 const User = require('../models').User
 const bcrypt = require('bcrypt')
+const src = require('secure-random-string')
 
 const create = (req, res, next) => {
   console.log(req.body)
@@ -7,7 +8,7 @@ const create = (req, res, next) => {
     User.create({
       email: req.body.email,
       password: hash,
-      api_key: 0
+      api_key: src()
     })
     .then(user => {
       res.setHeader("Content-Type", "application/json")
