@@ -3,9 +3,9 @@ const app = require('../app')
 const request = require('supertest')
 
 describe('api', () => {
-  beforeAll(() => {
-    shell.exec('npx sequelize db:create')
-  })
+  // beforeAll(() => {
+  //   shell.exec('npx sequelize db:create')
+  // })
   beforeEach(() => {
     shell.exec('npx sequelize db:migrate')
     shell.exec('npx sequelize db:seed:all')
