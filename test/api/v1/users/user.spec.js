@@ -1,5 +1,5 @@
 const shell = require('shelljs')
-const app = require('../app')
+const app = require('../../../../app')
 const request = require('supertest')
 
 describe('api', () => {
