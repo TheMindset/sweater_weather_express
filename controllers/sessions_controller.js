@@ -4,7 +4,6 @@ const User = require('../models').User
 
 
 const create = (req, res) => {
-  console.log(req)
   let checkPassword = (incomingPassword, currentPassword) => {
     return bcrypt.compareSync(incomingPassword, currentPassword)
   }

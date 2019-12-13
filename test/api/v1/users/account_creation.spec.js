@@ -33,7 +33,6 @@ describe('api', () => {
     return request(app).post("/api/v1/users")
     .send(userTest)
     .then(response => {
-      console.log(response.body)
       expect(Object.keys(response.body.msg)).toContain("api_key")
       expect(Object.keys(response.body).length).toBe(1)
     })
