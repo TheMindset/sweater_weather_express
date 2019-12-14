@@ -5,16 +5,17 @@ const User = require('../../../../models').User
 
 describe('api', () => {
   beforeAll(() => {
+    shell.exec('npx sequelize db:drop')
     shell.exec('npx sequelize db:create')
-  })
-  beforeEach(() => {
     shell.exec('npx sequelize db:migrate')
   })
-  afterEach(() => {
+
+  afterAll(() => {
     shell.exec('npx sequelize db:migrate:undo:all')
   })
 
   describe('Test the account creation endpoint', () => {
+
     test('should return a 200 status', () => {
       return request(app).get("/")
       .then(response => {
@@ -23,11 +24,10 @@ describe('api', () => {
     })
   })
 
-
-  test('should return an api_key', () =>{
-    let userTest = {
-      email: "test@gmail.com",
-      password: "123456"
+  test('should returns a api_key when valid infos are sent', () =>{
+    let userTest = { 
+      email: 'test@gmail.com',
+      password: '123456'
     }
 
     return request(app).post("/api/v1/users")
@@ -38,16 +38,31 @@ describe('api', () => {
     })
   })
 
-  /* TODO */
-  // test('should return an error when wrong email is sent', () => {
-  //   let userTest = {
-  //     email: "testgmail.com",
-  //     password: "123456"
-  //   }
+  test('should return an error when wrong email is sent', () => {
+    let userTest = {
+      email: "testgmail.com",
+      password: "123456"
+    }
 
-  //   return request(app).post("/api/v1/users").send(userTest).then(response => {
-  //     console.log(response.error)
-  //     expect(Object.keys(response.error.errors)).toBe("The email must be valid")
-  //   })
-  // })
+    return request(app).post("/api/v1/users")
+    .send(userTest)
+    .then(response => {
+      expect(response.body.error.errors[0].message).toBe("Validation isEmail on email failed")
+    })
+  })
+
+
+  test('should return an error when the same email is sent', () => {
+    let userTest = {
+      email: 'test@gmail.com',
+      password: "123456"
+    }
+
+    return request(app).post("/api/v1/users")
+    .send(userTest)
+    .then(response => {
+      expect(response.body.error.errors[0].message).toBe('email must be unique')
+    })
+  })
+
 })
