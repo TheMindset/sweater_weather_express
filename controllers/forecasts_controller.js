@@ -3,6 +3,8 @@ require('dotenv').config();
 const fetch = require('node-fetch')
 const User = require('../models').User
 
+const forecastSerializer = require('../serializers/forecast_serializers')
+
 const show = (req, res) => {
   User.findOne({
     where: {
@@ -28,7 +30,7 @@ const show = (req, res) => {
       })
       .then(data => {
         res.setHeader('Content-type', 'application/json')
-        res.status(200).send(JSON.stringify({ data: data }))
+        res.status(200).send(JSON.stringify({ data: new forecastSerializer(req.query.location, data) }))
       })
       .catch(error => {
         res.status(500).send(JSON.stringify({ error: error }))
