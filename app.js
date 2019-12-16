@@ -25,5 +25,6 @@ app.use('/api/v1/users', usersRouter);
 app.use('/api/v1/sessions', sessionsRouter);
 app.use('/api/v1/forecasts', forecastsRouter);
 app.use('/api/v1/favorites', favoritesRouter);
+app.use('/api/v1/favorites', favoritesRouter);
 
 module.exports = app;

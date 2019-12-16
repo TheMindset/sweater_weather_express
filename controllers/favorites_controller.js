@@ -88,6 +88,36 @@ const show = (req, res) => {
   })
 }
 
+const deleteLocation = (req, res) => {
+  return User.findOne({
+    where: {
+      api_key: req.body.api_key
+    }
+  })
+  .then(user => {
+    if (user) {
+      return Location.destroy({
+        where: {
+          UserId : user.id,
+          city: req.query.location
+        }
+      })
+      .then(location => {
+        console.log(location)
+        res.setHeader('Content-Type', 'application/json')
+        res.status(204).send(JSON.stringify({ message: `${req.query.location}, has been deleted from your favorites` }))
+      }).catch( error => {
+        res.status(500).send(JSON.stringify({ error: error }))
+      })
+    } else {
+      res.setHeader('Content-Type', 'application/json')
+      res.status(401).send(JSON.stringify({ error: 'Api_key submit is incorrect' }))
+    }
+  })
+}
+
+
+
 const formatLatLong = (latLong) => {
   return (String(latLong['lat'] + ',' + String(latLong['lng'])))
 }
@@ -98,5 +128,5 @@ const formatLocation = (location) => {
 
 
 module.exports = {
-  create, show
+  create, show, deleteLocation
 }
