@@ -14,7 +14,6 @@ const create = (req, res) => {
   .then(user => {
     if(user) {
       let city = req.query.location
-      console.log(city)
 
       return Location.create({
         city: city,
@@ -29,12 +28,75 @@ const create = (req, res) => {
       })
     } else {
       res.setHeader('Content-type', 'application/json')
-      res.status(401).send(JSON.stringify({ error: 'Api_key submit is incorrect' }))
+      res.status(401).send(JSON.stringify({ error: error }))
     }
   })
 }
 
 
+const show = (req, res) => {
+  User.findOne({
+    where: {
+      api_key: req.body.api_key
+    }
+  })
+  .then(user => {
+    if (user) {
+      return user.getLocations()
+      .then(locations => {
+        let aryOfAllLocationWeather = []
+
+        locations.forEach(location => {
+          let formattedLocation = formatLocation(location)
+
+          fetch(`https://maps.googleapis.com/maps/api/geocode/json?key=${process.env.GOOGLE_MAPS_API_KEY}&address=${formattedLocation}`)
+          .then(response => { 
+            return response.json()
+          })
+          .then(data => {
+            let latLong = data['results'][0]['geometry']['location']
+            let formattedLatLong = formatLatLong(latLong)
+            return formattedLatLong
+          })
+          .then(formattedLatLong => {
+            return fetch(`https://api.darksky.net/forecast/${process.env.DARKSKY_API_KEY}/${formattedLatLong}`)
+          })
+          .then(response => {
+
+            return response.json()
+          })
+          .then(data => {
+            let locationWeather = {}
+
+            locationWeather.location = formattedLocation
+            locationWeather.currently = data.currently
+            aryOfAllLocationWeather.push(locationWeather)
+
+            if (aryOfAllLocationWeather.length == locations.length) {
+              res.setHeader('Content-Type', 'application/json')
+              res.status(200).send(JSON.stringify({ data: aryOfAllLocationWeather }))
+            }
+          })
+        })
+      }).catch( error => {
+        res.status(500).send(JSON.stringify({ error: error }))
+      })
+    } else {
+      re.setHeader('Content-Type', 'application/json')
+      res.status(401).send(JSON.stringify({ error: 'Api_key submit is incorrect' }))
+    }
+  })
+}
+
+const formatLatLong = (latLong) => {
+  return (String(latLong['lat'] + ',' + String(latLong['lng'])))
+}
+
+const formatLocation = (location) => {
+  return location.dataValues.city
+}
+
+
 module.exports = {
-  create,
+  create, show
 }
