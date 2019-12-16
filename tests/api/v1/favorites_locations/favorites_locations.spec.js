@@ -109,7 +109,29 @@ describe('favorites locations endpoint', () => {
   })
 
 
-  test('should delete a favorite location when valid a valid api_key is sent', () => {
+  test('should delete a favorite location when valid api_key is sent', () => {
+    User.create({
+      email: 'test@test.com',
+      password: 'password',
+      api_key: 'MZDhD88Ut_C8F_dZxMpH_AJ8cpYlLcdt'
+    })
+    .then(user => {
+      Location.create({
+        city: 'Paris',
+        userId: user.id
+      })
+      request(app)
+      .delete('/api/v1/favorites?location=Paris')
+      .send({
+        api_key: 'MZDhD88Ut_C8F_dZxMpH_AJ8cpYlLcdt'
+      })
+      .then(response => {
+        expect(response.statusCode).toBe(204)
+      })
+    }) 
+  })
+
+  test('should not delete a favorite location when a wrong api_key is sent', () => {
     User.create({
       email: 'test@test.com',
       password: 'password',
@@ -126,11 +148,10 @@ describe('favorites locations endpoint', () => {
         api_key: 'MZDhxxxt_C8F_dZxMpH_AJ8cpYlLcdt'
       })
       .then(response => {
-        expect(response.statusCode).toBe(204)
-        expect(Object.keys(response.body)).toContain('message')
-        expect(Object.keys(response.body.message)).toEqual('Paris, has been deleted from your favorites');
+        expect(response.statusCode).toBe(401)
+        expect(Object.keys(response.body)).toContain('error')
+        expect(Object.keys(response.body.error)).toEqual('Api_key submit is incorrect');
       })
     }) 
   })
-
 })
