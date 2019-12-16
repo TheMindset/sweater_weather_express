@@ -103,7 +103,7 @@ describe('favorites locations endpoint', () => {
       .then(response => {
         expect(response.statusCode).toBe(401)
         expect(Object.keys(response.body)).toContain('error')
-        expect(Object.keys(response.body.message)).toEqual('Api_key submit is incorrect');
+        expect(Object.keys(response.body.error)).toEqual('Api_key submit is incorrect');
       })
     }) 
   })
