@@ -9,7 +9,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       city: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       UserId: {
         type: Sequelize.INTEGER,
