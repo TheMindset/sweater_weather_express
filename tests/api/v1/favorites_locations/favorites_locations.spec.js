@@ -5,6 +5,7 @@ const request = require('supertest')
 const User = require('../../../../models').User
 
 describe('favorites locations endpoint', () => {
+  
   beforeAll(() => {
     return User.create({
       email: 'test@test.com',
