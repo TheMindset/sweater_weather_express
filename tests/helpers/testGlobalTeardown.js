@@ -1,0 +1,5 @@
+const shell = require('shelljs')
+
+module.exports = () => {
+  shell.exec("npx sequelize db:migrate:undo:all")
+}
