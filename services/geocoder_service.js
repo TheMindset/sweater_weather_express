@@ -11,7 +11,8 @@ class geocoderService {
       return response.json()
     })
     .then(data => {
-      let latLong = data['results'][0]['geometry']['location']
+      console.log(data)
+      let latLong = data.results[0].geometry.location
       let formattedLatLong = formatLatLong(latLong)
       return formattedLatLong
     })
@@ -19,7 +20,7 @@ class geocoderService {
 }
 
 const formatLatLong = (latLong) => {
-  return (String(latLong['lat'] + ',' + String(latLong['lng'])))
+  return (String(latLong.lat + ',' + String(latLong.lng)))
 }
 
 
