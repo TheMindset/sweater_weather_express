@@ -1,3 +1,8 @@
 module.exports = {
-  testEnvironment: "node"
+  testEnvironment: "node",
+  maxConcurrency: 1,
+  globalSetup: "./tests/helpers/testGlobalSetup.js",
+  globalTeardown: "./tests/helpers/testGlobalTeardown.js"
+
 }
+
