@@ -28,7 +28,7 @@ const create = (req, res) => {
       })
     } else {
       res.setHeader('Content-type', 'application/json')
-      res.status(401).send(JSON.stringify({ error: error }))
+      res.status(401).send(JSON.stringify({ error: 'Api_key submit is incorrect' }))
     }
   })
 }
@@ -82,7 +82,7 @@ const show = (req, res) => {
         res.status(500).send(JSON.stringify({ error: error }))
       })
     } else {
-      re.setHeader('Content-Type', 'application/json')
+      res.setHeader('Content-Type', 'application/json')
       res.status(401).send(JSON.stringify({ error: 'Api_key submit is incorrect' }))
     }
   })
