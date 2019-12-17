@@ -1,4 +1,5 @@
-const fetch = require('node-fetch')
+const geocoderService = require('../services/geocoder_service')
+const darkskyService = require('../services/darksky_service')
 
 const User = require('../models').User
 const Location = require('../models').Location
@@ -45,29 +46,22 @@ const show = (req, res) => {
         let aryOfAllLocationWeather = []
 
         locations.forEach(location => {
-          let formattedLocation = formatLocation(location)
+          let formattedLocation = formatLocation(location);
+          let _geocoderService = new geocoderService(formattedLocation);
+          console.log(_geocoderService)
 
-          fetch(`https://maps.googleapis.com/maps/api/geocode/json?key=${process.env.GOOGLE_MAPS_API_KEY}&address=${formattedLocation}`)
-          .then(response => { 
-            return response.json()
-          })
-          .then(data => {
-            let latLong = data['results'][0]['geometry']['location']
-            let formattedLatLong = formatLatLong(latLong)
-            return formattedLatLong
-          })
+          let formattedLatLong = _geocoderService.retreiveFormattedLocation();
+          return formattedLatLong
           .then(formattedLatLong => {
-            return fetch(`https://api.darksky.net/forecast/${process.env.DARKSKY_API_KEY}/${formattedLatLong}`)
+            let _darkskyService = new darkskyService(formattedLatLong);
+            let forcastData = _darkskyService.retreiveForecastDate();
+            return forcastData
           })
-          .then(response => {
-
-            return response.json()
-          })
-          .then(data => {
+          .then(forecastData => {
             let locationWeather = {}
 
             locationWeather.location = formattedLocation
-            locationWeather.currently = data.currently
+            locationWeather.currently = forecastData.currently
             aryOfAllLocationWeather.push(locationWeather)
 
             if (aryOfAllLocationWeather.length == locations.length) {
@@ -116,9 +110,9 @@ const deleteLocation = (req, res) => {
 
 
 
-const formatLatLong = (latLong) => {
-  return (String(latLong['lat'] + ',' + String(latLong['lng'])))
-}
+// const formatLatLong = (latLong) => {
+//   return (String(latLong['lat'] + ',' + String(latLong['lng'])))
+// }
 
 const formatLocation = (location) => {
   return location.dataValues.city
