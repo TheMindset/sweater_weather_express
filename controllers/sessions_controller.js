@@ -16,10 +16,10 @@ const create = (req, res) => {
   .then(user => {
     if (user && checkPassword(req.body.password, user.password)) {
       res.setHeader("Content-Type", "application/json")
-      res.status(201).send(JSON.stringify({ api_key: user.api_key }))
+      res.status(200).send(JSON.stringify({ api_key: user.api_key }))
     } else {
       res.setHeader("Content-Type", "application/json")
-      res.status(401).send(JSON.stringify({ error: 'Email or password incorrect !' }))
+      res.status(401).send(JSON.stringify({ error: 'Email or password is incorrect.' }))
     }
   })
 }
