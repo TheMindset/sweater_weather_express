@@ -48,7 +48,6 @@ const show = (req, res) => {
         locations.forEach(location => {
           let formattedLocation = formatLocation(location);
           let _geocoderService = new geocoderService(formattedLocation);
-          console.log(_geocoderService)
 
           let formattedLatLong = _geocoderService.retreiveFormattedLocation();
           return formattedLatLong
@@ -95,7 +94,6 @@ const deleteLocation = (req, res) => {
         }
       })
       .then(location => {
-        console.log(location)
         res.setHeader('Content-Type', 'application/json')
         res.status(204).send(JSON.stringify({ message: `${req.query.location}, has been deleted from your favorites` }))
       }).catch( error => {
@@ -107,12 +105,6 @@ const deleteLocation = (req, res) => {
     }
   })
 }
-
-
-
-// const formatLatLong = (latLong) => {
-//   return (String(latLong['lat'] + ',' + String(latLong['lng'])))
-// }
 
 const formatLocation = (location) => {
   return location.dataValues.city
