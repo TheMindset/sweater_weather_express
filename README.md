@@ -16,7 +16,8 @@ https://sweater-wheather-express.herokuapp.com
 Creates a user account, using an email, password, and password_confirmation passed in as form data in the body of the request.
 
 Request:
-```
+
+```json
 Content-Type: application/json
 Accept: application/json
 
@@ -28,18 +29,21 @@ body:
 ```
 
 Example of expected output:
-```
+
+```json
 {
   "api_key": "11bf5b37-e0b8-42e0-8dcf-dc8c4aefc000"
 }
 ```
+---
 
 ### POST /api/v1/sessions
 
 Authenticates a user, using an email and password passed in as form data in the body of the request.
 
 Request:
-```
+
+```json
 Content-Type: application/json
 Accept: application/json
 
@@ -51,18 +55,22 @@ body:
 ```
 
 Example of expected output:
-```
+
+```json
 {
   "api_key": "11bf5b37-e0b8-42e0-8dcf-dc8c4aefc000"
 }
 ```
+
+---
 
 ### GET /api/v1/forecast?location=Paris
 
 Returns the current weather for a location, as well as both 8-hour and 7-day forecasts.
 
 Request:
-```
+
+```json
 Content-Type: application/json
 Accept: application/json
 
@@ -73,7 +81,10 @@ body:
 ```
 
 Example of expected output:
-```
+
+<details>
+
+```json
 {
     "data": {
         "location": "Paris",
@@ -165,13 +176,17 @@ Example of expected output:
     }
 }
 ```
+</details>
+
+---
 
 ### POST /api/v1/favorites
 
 Creates a new favorite location for a user.
 
 Request:
-```
+
+```json
 Content-Type: application/json
 Accept: application/json
 
@@ -183,18 +198,21 @@ body:
 ```
 
 Example of expected output:
-```
+
+```json
 {
   "message": "Kigali, has been added to your favorites."
 }
 ```
+---
 
 ### GET /api/v1/favorites
 
 Lists the current weather for all of a user's favorite locations.
 
 Request:
-```
+
+```json
 Content-Type: application/json
 Accept: application/json
 
@@ -205,8 +223,10 @@ body:
 ```
 
 Example of expected output:
-```
-{
+
+<details>
+
+```json
 {
     "data": [
         {
@@ -257,13 +277,17 @@ Example of expected output:
     ]
 }
 ```
+</details>
+
+---
 
 ### DELETE /api/v1/favorites
 
 Deletes a favorite location for a user.
 
 Request:
-```
+
+```json
 Content-Type: application/json
 Accept: application/json
 
@@ -275,9 +299,12 @@ body:
 ```
 
 Example of expected output:
-```
+
+```json
 status: 204
 ```
+
+---
 
 ## Local Installation
 
