@@ -310,10 +310,11 @@ status: 204
 
 ### Requirements & Technique Stack
 
-Node.js 12.13.1 / Express 4.17.1
-Squelize 5.21.2
-NPM 6.12.1
-Jest 24.9.0 / Superset 1.0.1
+* Node.js / Express
+
+* Squelize
+
+* Jest / Superset
 
 ### Clone
 
