@@ -12,7 +12,7 @@ const create = (req, res) => {
   })
   .then(user => {
     if(user) {
-      let city = req.query.location
+      let city = req.body.location
 
       return Location.create({
         city: city,
@@ -90,7 +90,7 @@ const deleteLocation = (req, res) => {
       return Location.destroy({
         where: {
           UserId : user.id,
-          city: req.query.location
+          city: req.body.location
         }
       })
       .then(location => {
