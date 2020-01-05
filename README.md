@@ -64,7 +64,7 @@ Example of expected output:
 
 ---
 
-### GET /api/v1/forecast?location=Paris
+### GET /api/v1/forecasts?location=Paris
 
 Returns the current weather for a location, as well as both 8-hour and 7-day forecasts.
 
@@ -189,6 +189,9 @@ Request:
 ```json
 Content-Type: application/json
 Accept: application/json
+
+params: {
+}
 
 body:
 {
