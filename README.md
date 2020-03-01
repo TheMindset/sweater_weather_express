@@ -322,7 +322,7 @@ status: 204
 ### Clone
 
 ```
-$ git clone https://github.com/alexander-mathieu/whether_sweater_express.git
+$ git clone git@github.com:TheMindset/sweater_weather_express.git
 $ cd whether_sweater_express
 $ npm install
 ```
