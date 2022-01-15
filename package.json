@@ -32,7 +32,7 @@
     "secure-random-string": "^1.1.2",
     "sequelize": "^5.21.2",
     "sequelize-cli": "^5.5.1",
-    "shelljs": "^0.8.3",
+    "shelljs": "^0.8.5",
     "supertest": "^4.0.2"
   },
   "devDependencies": {
